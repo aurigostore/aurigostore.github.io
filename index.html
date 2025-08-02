@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS PROJECT - Landing Page</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a; /* A very dark background */
+            color: #e5e7eb; /* Light gray text for readability */
+        }
+        .glow-effect {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(29, 78, 216, 0.15) 0%, rgba(29, 78, 216, 0) 60%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            border-color: rgba(59, 130, 246, 0.7);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .contact-icon {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .contact-icon:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.7);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Background glow effect -->
+    <div class="glow-effect"></div>
+
+    <!-- Main container -->
+    <div class="relative min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 overflow-hidden">
+        
+        <!-- Header Section -->
+        <header class="text-center z-10 mb-12 pt-16">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter mb-4">
+                <span class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+                    AS PROJECT
+                </span>
+            </h1>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                Selamat datang di koleksi proyek dan eksperimen digital saya. Jelajahi aplikasi yang telah saya bangun di bawah ini.
+            </p>
+        </header>
+
+        <!-- Projects Grid -->
+        <main class="z-10 w-full max-w-4xl">
+            <h2 class="text-3xl font-bold text-center mb-8 text-white">Proyek Saya</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <!-- Project Card 1: OTP CANVA -->
+                <div class="card rounded-xl p-6 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-2xl font-bold text-white mb-2">OTP CANVA</h3>
+                        <p class="text-gray-400 mb-4">
+                            Sebuah aplikasi kanvas interaktif untuk visualisasi dan manajemen One-Time Passwords (OTP) dengan antarmuka yang bersih.
+                        </p>
+                    </div>
+                    <a href="http://otpcanva.github.io" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block bg-blue-600 text-white font-semibold text-center py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                        Kunjungi Aplikasi
+                    </a>
+                </div>
+
+                <!-- Project Card 2: TIMESTAMP GENERATOR -->
+                <div class="card rounded-xl p-6 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-2xl font-bold text-white mb-2">TIMESTAMP GENERATOR</h3>
+                        <p class="text-gray-400 mb-4">
+                            Alat sederhana untuk menghasilkan dan mengonversi timestamp Unix, membantu developer dalam debugging dan manajemen waktu.
+                        </p>
+                    </div>
+                    <a href="http://asproject.github.io/timestamp" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block bg-pink-600 text-white font-semibold text-center py-3 px-6 rounded-lg hover:bg-pink-700 transition-colors duration-300">
+                        Kunjungi Aplikasi
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <!-- About Me Section -->
+        <section class="z-10 w-full max-w-4xl mt-20 text-center">
+            <h2 class="text-3xl font-bold mb-4 text-white">Tentang Saya</h2>
+            <div class="card rounded-xl p-8 max-w-3xl mx-auto">
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    Saya adalah pemilik <strong>Aurigo Store</strong>, seorang supplier aplikasi digital dan desainer grafis yang selalu antusias menghadapi tantangan baru. Dengan keahlian di bidang desain dan pengembangan, saya bersemangat untuk menciptakan solusi digital yang inovatif dan fungsional.
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="z-10 w-full max-w-4xl mt-20 text-center">
+            <h2 class="text-3xl font-bold mb-4 text-white">Hubungi Saya</h2>
+            <p class="text-lg text-gray-400 mb-8">Tertarik untuk berkolaborasi atau sekadar menyapa? Jangan ragu.</p>
+            <div class="flex justify-center items-center gap-4">
+                <!-- Email -->
+                <a href="mailto:aurigostore@gmail.com" class="contact-icon p-4 rounded-full" aria-label="Email">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                </a>
+                <!-- Telegram -->
+                <a href="https://t.me/aurigostore" target="_blank" rel="noopener noreferrer" class="contact-icon p-4 rounded-full" aria-label="Telegram">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.17.91-.494 1.208-.822 1.23-.696.045-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.04-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.24-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.662 3.488-1.373 5.81-2.264 6.717-2.689.94-.438 1.783-.643 2.44-.643z"/>
+                    </svg>
+                </a>
+                <!-- WhatsApp -->
+                <a href="https://wa.me/6285175008581" target="_blank" rel="noopener noreferrer" class="contact-icon p-4 rounded-full" aria-label="WhatsApp">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.357 1.849 6.081l-1.214 4.439 4.572-1.21zM8.341 6.812c.124-.288.442-.465.724-.465.232 0 .441.056.6.124.232.112.532.524.618.69.176.336.264.552.348.804.084.252.18.528.084.78-.084.252-.216.42-.456.66-.239.24-.48.492-.684.684-.204.18-.396.384-.216.72.18.336.792 1.344 1.704 2.256.912.912 1.92 1.524 2.256 1.704.336.18.54.024.72-.216.192-.216.444-.456.684-.684.24-.24.42-.372.66-.456.252-.096.528.012.78.084.252.084.468.176.69.348.168.084.576.384.69.618.112.156.168.36.124.6.0.012-.276.432-.465.724-.18.288-.465.441-.804.441-.336.012-.792-.06-1.224-.204-.432-.144-2.592-1.056-4.944-3.396-2.352-2.34-3.252-4.512-3.396-4.944-.144-.432-.216-.888-.204-1.224.012-.348.156-.624.441-.804z"/>
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="z-10 text-center mt-20 pb-16 text-gray-500">
+            <p>&copy; 2024 AS PROJECT. Dibuat dengan semangat.</p>
+        </footer>
+    </div>
+</body>
+</html>
