@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AS PROJECT - Landing Page</title>
+    <title>Aurigo Store - Tools Dashboard</title>
     
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,158 +11,350 @@
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Custom styles */
-        html {
-            scroll-behavior: smooth;
-        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a; /* A very dark background */
-            color: #e5e7eb; /* Light gray text for readability */
+            background-color: #0f172a;
+            background-image: linear-gradient(to bottom right, #1e3a8a, #0f172a);
+            overflow-x: hidden;
         }
-        .glow-effect {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(29, 78, 216, 0.15) 0%, rgba(29, 78, 216, 0) 60%);
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-        .card {
-            background-color: rgba(255, 255, 255, 0.03);
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(30, 41, 59, 0.5); }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
         }
-        .card:hover {
-            border-color: rgba(59, 130, 246, 0.7);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        .loader {
+            width: 48px; height: 48px; border: 5px solid #FFF;
+            border-bottom-color: #3B82F6; border-radius: 50%;
+            display: inline-block; box-sizing: border-box;
+            animation: rotation 1s linear infinite;
         }
-        .contact-icon {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        .contact-icon:hover {
-            background-color: rgba(59, 130, 246, 0.2);
-            border-color: rgba(59, 130, 246, 0.7);
-            transform: scale(1.05);
-        }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .view-btn-active { background-color: #3B82F6; color: white; }
     </style>
 </head>
-<body class="antialiased">
-    <!-- Background glow effect -->
-    <div class="glow-effect"></div>
+<body class="text-slate-300">
 
-    <!-- Main container -->
-    <div class="relative min-h-screen flex flex-col items-center p-4 sm:p-6 lg:p-8 overflow-hidden">
-        
-        <!-- Header Section -->
-        <header class="text-center z-10 mb-12 pt-16">
-            <h1 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter mb-4">
-                <span class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
-                    AS PROJECT
-                </span>
-            </h1>
-            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
-                Selamat datang di koleksi proyek dan eksperimen digital saya. Jelajahi aplikasi yang telah saya bangun di bawah ini.
-            </p>
+    <!-- Decorative Background Blobs -->
+    <div class="absolute top-0 -left-4 w-72 h-72 bg-blue-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse"></div>
+    <div class="absolute bottom-0 -right-4 w-72 h-72 bg-indigo-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse animation-delay-4000"></div>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="fixed inset-0 flex items-center justify-center z-50"><div class="loader"></div></div>
+
+    <!-- Main Container -->
+    <div id="main-container" class="hidden relative container mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen flex flex-col z-10">
+        <header class="text-center mb-8 pt-16 sm:pt-0">
+            <img src="https://i.imgur.com/Oq470WY.png" alt="Logo Aurigo Store" class="mx-auto h-24 w-24 mb-4" onerror="this.onerror=null;this.src='https://placehold.co/96x96/1e293b/ffffff?text=AS';">
+            <h1 class="text-4xl font-bold tracking-tight"><span class="text-blue-400">Aurigo Store</span> <span class="text-white">Tools</span></h1>
+            <p class="text-slate-400 mt-2">Dashboard internal untuk manajemen proyek dan tools.</p>
         </header>
 
-        <!-- Projects Grid -->
-        <main class="z-10 w-full max-w-4xl">
-            <h2 class="text-3xl font-bold text-center mb-8 text-white">Proyek Saya</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Announcement Banner -->
+        <div id="announcement-banner" class="hidden glass-effect rounded-lg p-4 mb-8 text-center">
+            <p id="announcement-text" class="text-slate-300"></p>
+        </div>
 
-                <!-- Project Card 1: OTP CANVA -->
-                <div class="card rounded-xl p-6 flex flex-col">
-                    <div class="flex-grow">
-                        <h3 class="text-2xl font-bold text-white mb-2">OTP CANVA</h3>
-                        <p class="text-gray-400 mb-4">
-                            Aplikasi kanvas interaktif untuk visualisasi dan manajemen One-Time Passwords (OTP) dengan antarmuka yang bersih.
-                        </p>
-                    </div>
-                    <a href="http://otpcanva.github.io" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block bg-blue-600 text-white font-semibold text-center py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">
-                        Kunjungi Aplikasi
-                    </a>
-                </div>
-
-                <!-- Project Card 2: TIMESTAMP GENERATOR -->
-                <div class="card rounded-xl p-6 flex flex-col">
-                    <div class="flex-grow">
-                        <h3 class="text-2xl font-bold text-white mb-2">TIMESTAMP GENERATOR</h3>
-                        <p class="text-gray-400 mb-4">
-                            Alat sederhana untuk menghasilkan dan mengonversi timestamp Unix, membantu developer dalam debugging.
-                        </p>
-                    </div>
-                    <a href="http://asproject.github.io/timestamp" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block bg-pink-600 text-white font-semibold text-center py-3 px-6 rounded-lg hover:bg-pink-700 transition-colors duration-300">
-                        Kunjungi Aplikasi
-                    </a>
-                </div>
-
-                <!-- Project Card 3: IDCARD GENERATOR -->
-                <div class="card rounded-xl p-6 flex flex-col">
-                    <div class="flex-grow">
-                        <h3 class="text-2xl font-bold text-white mb-2">IDCARD GENERATOR</h3>
-                        <p class="text-gray-400 mb-4">
-                            Sebuah alat bantu untuk membuat ID Card mahasiswa Politeknik Negeri Pontianak secara cepat dan mudah.
-                        </p>
-                    </div>
-                    <a href="http://aurigostore.github.io/idcardgenerator" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block bg-purple-600 text-white font-semibold text-center py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors duration-300">
-                        Kunjungi Aplikasi
-                    </a>
-                </div>
+        <!-- View Controls -->
+        <div id="view-controls" class="flex justify-end items-center mb-6">
+            <div class="flex items-center bg-slate-800/50 rounded-lg p-1 space-x-1">
+                <button id="grid-view-btn" class="view-btn-active p-2 rounded-md transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></button>
+                <button id="list-view-btn" class="p-2 rounded-md transition-colors text-slate-400 hover:bg-slate-700/50"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
             </div>
-        </main>
+        </div>
 
-        <!-- About Me Section -->
-        <section class="z-10 w-full max-w-4xl mt-20 text-center">
-            <h2 class="text-3xl font-bold mb-4 text-white">Tentang Saya</h2>
-            <div class="card rounded-xl p-8 max-w-3xl mx-auto">
-                <p class="text-lg text-gray-300 leading-relaxed">
-                    Saya adalah pemilik <strong>Aurigo Store</strong>, seorang supplier aplikasi digital dan desainer grafis yang selalu antusias menghadapi tantangan baru. Dengan keahlian di bidang desain dan pengembangan, saya bersemangat untuk menciptakan solusi digital yang inovatif dan fungsional.
-                </p>
+        <main class="flex-grow"><div id="tools-container" class="gap-6 justify-center"></div></main>
+
+        <footer class="text-center mt-12 pt-8 border-t border-white/10">
+            <p class="text-slate-500">&copy; 2025 Aurigo Store</p>
+            <div class="flex justify-center items-center space-x-6 mt-4 text-slate-400">
+                <a href="https://t.me/aurigostore_bot" target="_blank" class="hover:text-blue-400 transition-colors">Bot Telegram</a><span>&bull;</span>
+                <a href="https://t.me/aurigostore" target="_blank" class="hover:text-blue-400 transition-colors">Admin</a><span>&bull;</span>
+                <a href="https://t.me/aurigostore_group" target="_blank" class="hover:text-blue-400 transition-colors">Grup Diskusi</a>
             </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="z-10 w-full max-w-4xl mt-20 text-center">
-            <h2 class="text-3xl font-bold mb-4 text-white">Hubungi Saya</h2>
-            <p class="text-lg text-gray-400 mb-8">Tertarik untuk berkolaborasi atau sekadar menyapa? Jangan ragu.</p>
-            <div class="flex justify-center items-center gap-4">
-                <!-- Email -->
-                <a href="mailto:aurigostore@gmail.com" class="contact-icon p-4 rounded-full" aria-label="Email">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                    </svg>
-                </a>
-                <!-- Telegram -->
-                <a href="https://t.me/aurigostore" target="_blank" rel="noopener noreferrer" class="contact-icon p-4 rounded-full" aria-label="Telegram">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.17.91-.494 1.208-.822 1.23-.696.045-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.04-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.24-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.662 3.488-1.373 5.81-2.264 6.717-2.689.94-.438 1.783-.643 2.44-.643z"/>
-                    </svg>
-                </a>
-                <!-- WhatsApp -->
-                <a href="https://wa.me/6285175008581" target="_blank" rel="noopener noreferrer" class="contact-icon p-4 rounded-full" aria-label="WhatsApp">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.357 1.849 6.081l-1.214 4.439 4.572-1.21zM8.341 6.812c.124-.288.442-.465.724-.465.232 0 .441.056.6.124.232.112.532.524.618.69.176.336.264.552.348.804.084.252.18.528.084.78-.084.252-.216.42-.456.66-.239.24-.48.492-.684.684-.204.18-.396.384-.216.72.18.336.792 1.344 1.704 2.256.912.912 1.92 1.524 2.256 1.704.336.18.54.024.72-.216.192-.216.444-.456.684-.684.24-.24.42-.372.66-.456.252-.096.528.012.78.084.252.084.468.176.69.348.168.084.576.384.69.618.112.156.168.36.124.6.0.012-.276.432-.465.724-.18.288-.465.441-.804.441-.336.012-.792-.06-1.224-.204-.432-.144-2.592-1.056-4.944-3.396-2.352-2.34-3.252-4.512-3.396-4.944-.144-.432-.216-.888-.204-1.224.012-.348.156-.624.441-.804z"/>
-                    </svg>
-                </a>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="z-10 text-center mt-20 pb-16 text-gray-500">
-            <p>&copy; 2024 AS PROJECT. Dibuat dengan semangat.</p>
         </footer>
     </div>
+
+    <button id="admin-button" class="fixed top-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg shadow-blue-500/50 transition-transform transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-blue-500 z-20"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg></button>
+
+    <div id="password-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"><div class="glass-effect rounded-lg shadow-xl p-8 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-4 text-white">Akses Admin</h2><form id="password-form"><label for="password-input" class="block text-slate-300 mb-2">Masukkan Password</label><input type="password" id="password-input" class="w-full bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required><p id="password-error" class="text-red-400 text-sm mt-2 hidden">Password salah.</p><div class="mt-6 flex justify-end space-x-4"><button type="button" id="cancel-password" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md text-white transition-colors">Batal</button><button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-semibold transition-colors">Masuk</button></div></form></div></div>
+
+    <div id="admin-panel-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"><div class="glass-effect rounded-lg shadow-xl p-8 w-full max-w-2xl mx-4 h-full max-h-[90vh] flex flex-col"><div id="admin-list-view" class="flex flex-col h-full"><div class="flex justify-between items-center mb-6 flex-shrink-0"><h2 class="text-2xl font-bold text-white">Panel Admin</h2><div class="flex space-x-2"><button id="edit-announcement-btn" class="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded-md transition-colors">Edit Info</button><button id="new-tool-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors">+ Tool Baru</button></div></div><div id="admin-tools-list" class="space-y-3 overflow-y-auto flex-grow pr-2"></div><div class="flex-shrink-0 pt-6 text-center"><button id="close-admin-panel-list" class="text-slate-400 hover:text-white transition-colors">Tutup</button></div></div><div id="admin-form-view" class="hidden flex flex-col h-full"><div class="flex justify-between items-center mb-6 flex-shrink-0"><h2 id="form-title" class="text-2xl font-bold text-white"></h2><button id="back-to-list-btn" class="text-slate-400 hover:text-white transition-colors">&larr; Kembali</button></div><form id="tool-form" class="flex-grow flex flex-col overflow-hidden"><div class="flex-grow overflow-y-auto pr-2 space-y-4"><input type="hidden" id="edit-id"><div><label for="tool-title" class="block text-slate-300 mb-2 text-sm">Judul Tool</label><input type="text" id="tool-title" class="w-full bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white" required></div><div><label for="tool-url" class="block text-slate-300 mb-2 text-sm">URL Tool</label><input type="url" id="tool-url" class="w-full bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white" required></div><div><label for="tool-icon" class="block text-slate-300 mb-2 text-sm">URL Ikon (Opsional)</label><input type="url" id="tool-icon" class="w-full bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white"></div><div><label for="tool-description" class="block text-slate-300 mb-2 text-sm">Deskripsi</label><textarea id="tool-description" rows="4" class="w-full bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white" required></textarea></div><div class="flex items-center"><input id="tool-pinned" type="checkbox" class="h-4 w-4 bg-slate-700 border-slate-500 rounded text-blue-500 focus:ring-blue-500"><label for="tool-pinned" class="ml-2 text-sm text-slate-300">Sematkan (Pin) Tool ini</label></div></div><div class="flex-shrink-0 pt-4"><button type="submit" id="submit-tool-button" class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-semibold"></button></div></form></div></div></div>
+    
+    <div id="announcement-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"><div class="glass-effect rounded-lg shadow-xl p-8 w-full max-w-lg mx-4"><h2 class="text-2xl font-bold mb-4 text-white">Edit Papan Pengumuman</h2><form id="announcement-form"><label for="announcement-input" class="block text-slate-300 mb-2">Teks Pengumuman</label><textarea id="announcement-input" rows="4" class="w-full bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white"></textarea><div class="mt-6 flex justify-end space-x-4"><button type="button" id="cancel-announcement" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md text-white">Batal</button><button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-semibold">Simpan</button></div></form></div></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc, query, orderBy, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = { apiKey: "AIzaSyBWFZYuPzAUUi459b46oh8PJFGXCHJJPwQ", authDomain: "aurigostore-3bc85.firebaseapp.com", projectId: "aurigostore-3bc85", storageBucket: "aurigostore-3bc85.appspot.com", messagingSenderId: "282567746487", appId: "1:282567746487:web:d1f015e944496278a7fe32" };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const ADMIN_PASSWORD = 'admin123';
+        let toolsCache = [];
+        let currentView = 'grid';
+        let unsubscribeFromTools, unsubscribeFromAnnouncement;
+
+        const dom = {
+            loadingSpinner: document.getElementById('loading-spinner'),
+            mainContainer: document.getElementById('main-container'),
+            toolsContainer: document.getElementById('tools-container'),
+            adminButton: document.getElementById('admin-button'),
+            passwordModal: document.getElementById('password-modal'),
+            passwordForm: document.getElementById('password-form'),
+            passwordInput: document.getElementById('password-input'),
+            passwordError: document.getElementById('password-error'),
+            cancelPassword: document.getElementById('cancel-password'),
+            adminPanel: document.getElementById('admin-panel-modal'),
+            adminList: document.getElementById('admin-list-view'),
+            adminForm: document.getElementById('admin-form-view'),
+            closeAdminListBtn: document.getElementById('close-admin-panel-list'),
+            backToListBtn: document.getElementById('back-to-list-btn'),
+            toolForm: document.getElementById('tool-form'),
+            editId: document.getElementById('edit-id'),
+            toolTitle: document.getElementById('tool-title'),
+            toolUrl: document.getElementById('tool-url'),
+            toolIcon: document.getElementById('tool-icon'),
+            toolDescription: document.getElementById('tool-description'),
+            toolPinned: document.getElementById('tool-pinned'),
+            submitToolBtn: document.getElementById('submit-tool-button'),
+            adminToolsList: document.getElementById('admin-tools-list'),
+            newToolBtn: document.getElementById('new-tool-btn'),
+            formTitle: document.getElementById('form-title'),
+            gridViewBtn: document.getElementById('grid-view-btn'),
+            listViewBtn: document.getElementById('list-view-btn'),
+            announcementBanner: document.getElementById('announcement-banner'),
+            announcementText: document.getElementById('announcement-text'),
+            editAnnouncementBtn: document.getElementById('edit-announcement-btn'),
+            announcementModal: document.getElementById('announcement-modal'),
+            announcementForm: document.getElementById('announcement-form'),
+            announcementInput: document.getElementById('announcement-input'),
+            cancelAnnouncement: document.getElementById('cancel-announcement'),
+        };
+
+        const defaultIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-slate-500"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>`;
+
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                if (unsubscribeFromTools) unsubscribeFromTools();
+                if (unsubscribeFromAnnouncement) unsubscribeFromAnnouncement();
+                unsubscribeFromTools = listenForTools();
+                unsubscribeFromAnnouncement = listenForAnnouncement();
+            } else {
+                signInAnonymously(auth).catch(console.error);
+            }
+        });
+
+        const listenForTools = () => {
+            const q = query(collection(db, 'shared_tools'), orderBy('createdAt', 'desc'));
+            return onSnapshot(q, (snapshot) => {
+                toolsCache = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderContent();
+                renderAdminList(toolsCache);
+                dom.loadingSpinner.style.display = 'none';
+                dom.mainContainer.classList.remove('hidden');
+                dom.mainContainer.style.display = 'flex';
+            }, console.error);
+        };
+        
+        const listenForAnnouncement = () => {
+            const announcementRef = doc(db, 'site_info', 'announcement');
+            return onSnapshot(announcementRef, (doc) => {
+                const data = doc.data();
+                if (data && data.text) {
+                    dom.announcementText.textContent = data.text;
+                    dom.announcementBanner.classList.remove('hidden');
+                } else {
+                    dom.announcementBanner.classList.add('hidden');
+                }
+            });
+        };
+
+        const renderContent = () => {
+            if (currentView === 'grid') {
+                dom.toolsContainer.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-center';
+                renderGrid(toolsCache);
+            } else {
+                dom.toolsContainer.className = 'space-y-4';
+                renderList(toolsCache);
+            }
+        };
+
+        const sortTools = (tools) => {
+            return [...tools].sort((a, b) => (b.isPinned || false) - (a.isPinned || false) || b.createdAt.toMillis() - a.createdAt.toMillis());
+        };
+
+        const renderGrid = (tools) => {
+            dom.toolsContainer.innerHTML = '';
+            if (tools.length === 0) {
+                dom.toolsContainer.innerHTML = `<p class="text-slate-400 col-span-full text-center">Belum ada tools.</p>`;
+                return;
+            }
+            sortTools(tools).forEach(tool => {
+                const isNew = tool.createdAt && (new Date() - tool.createdAt.toDate()) < 7 * 24 * 60 * 60 * 1000;
+                const toolCard = `
+                    <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="relative block glass-effect p-6 rounded-lg shadow-lg hover:shadow-blue-500/30 hover:border-blue-500 transition-all duration-300 transform hover:-translate-y-1">
+                        ${tool.isPinned ? `<div class="absolute top-3 right-3 text-yellow-400"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"></path></svg></div>` : ''}
+                        ${isNew ? `<span class="absolute top-2 left-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full">Baru</span>` : ''}
+                        <div class="flex items-center mb-4">
+                            ${tool.iconUrl ? `<img src="${tool.iconUrl}" class="w-8 h-8 mr-4" onerror="this.outerHTML='${defaultIcon}'">` : defaultIcon}
+                            <h3 class="text-xl font-bold text-white">${tool.title}</h3>
+                        </div>
+                        <p class="text-slate-400 text-sm">${tool.description}</p>
+                    </a>`;
+                dom.toolsContainer.innerHTML += toolCard;
+            });
+        };
+
+        const renderList = (tools) => {
+            dom.toolsContainer.innerHTML = '';
+            if (tools.length === 0) {
+                dom.toolsContainer.innerHTML = `<p class="text-slate-400 text-center">Belum ada tools.</p>`;
+                return;
+            }
+            sortTools(tools).forEach(tool => {
+                const isNew = tool.createdAt && (new Date() - tool.createdAt.toDate()) < 7 * 24 * 60 * 60 * 1000;
+                const listItem = `
+                    <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="flex items-center glass-effect p-4 rounded-lg shadow-lg hover:shadow-blue-500/30 hover:border-blue-500 transition-all duration-300">
+                        ${tool.iconUrl ? `<img src="${tool.iconUrl}" class="w-8 h-8 mr-4 flex-shrink-0" onerror="this.outerHTML='${defaultIcon}'">` : `<div class="mr-4 flex-shrink-0">${defaultIcon}</div>`}
+                        <div class="flex-grow"><h3 class="font-bold text-white">${tool.title}</h3><p class="text-slate-400 text-sm">${tool.description}</p></div>
+                        <div class="flex items-center flex-shrink-0 ml-4">
+                            ${isNew ? `<span class="bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full mr-4">Baru</span>` : ''}
+                            ${tool.isPinned ? `<div class="text-yellow-400 mr-4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"></path></svg></div>` : ''}
+                        </div>
+                    </a>`;
+                dom.toolsContainer.innerHTML += listItem;
+            });
+        };
+        
+        const renderAdminList = (tools) => {
+            dom.adminToolsList.innerHTML = '';
+            sortTools(tools).forEach(tool => {
+                const listItem = `<div class="flex items-center justify-between bg-white/5 p-3 rounded-md border border-white/10"><div class="flex items-center flex-grow pr-2">${tool.isPinned ? `<div class="text-yellow-400 mr-3 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"></path></svg></div>` : ''}<p class="font-semibold text-white truncate">${tool.title}</p></div><div class="flex items-center flex-shrink-0"><button data-id="${tool.id}" class="edit-btn p-2 text-slate-400 hover:text-yellow-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z" /></svg></button><button data-id="${tool.id}" class="delete-btn p-2 text-slate-400 hover:text-red-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button></div></div>`;
+                dom.adminToolsList.innerHTML += listItem;
+            });
+        };
+
+        const showListView = () => { dom.adminList.classList.remove('hidden'); dom.adminForm.classList.add('hidden'); };
+        const showFormView = () => { dom.adminList.classList.add('hidden'); dom.adminForm.classList.remove('hidden'); };
+        const resetForm = () => { dom.toolForm.reset(); dom.editId.value = ''; dom.formTitle.textContent = 'Tambah Tool Baru'; dom.submitToolBtn.textContent = 'Simpan Tool'; };
+        const closeAdminPanel = () => { dom.adminPanel.classList.add('hidden'); resetForm(); };
+
+        dom.adminButton.addEventListener('click', () => { dom.passwordModal.classList.remove('hidden'); dom.passwordInput.focus(); });
+        dom.cancelPassword.addEventListener('click', () => { dom.passwordModal.classList.add('hidden'); dom.passwordForm.reset(); dom.passwordError.classList.add('hidden'); });
+        
+        dom.passwordForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (dom.passwordInput.value === ADMIN_PASSWORD) {
+                dom.passwordModal.classList.add('hidden');
+                dom.passwordForm.reset();
+                dom.passwordError.classList.add('hidden');
+                dom.adminPanel.classList.remove('hidden');
+                showListView();
+            } else {
+                dom.passwordError.classList.remove('hidden');
+            }
+        });
+
+        dom.closeAdminListBtn.addEventListener('click', closeAdminPanel);
+        dom.backToListBtn.addEventListener('click', showListView);
+        dom.newToolBtn.addEventListener('click', () => { resetForm(); showFormView(); });
+
+        dom.toolForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = dom.editId.value;
+            const toolData = {
+                title: dom.toolTitle.value,
+                url: dom.toolUrl.value,
+                description: dom.toolDescription.value,
+                iconUrl: dom.toolIcon.value,
+                isPinned: dom.toolPinned.checked,
+                createdAt: new Date()
+            };
+
+            try {
+                if (id) {
+                    await updateDoc(doc(db, 'shared_tools', id), toolData);
+                } else {
+                    await addDoc(collection(db, 'shared_tools'), toolData);
+                }
+                showListView();
+            } catch (error) { console.error("Error saving tool:", error); }
+        });
+
+        dom.adminToolsList.addEventListener('click', async (e) => {
+            const editBtn = e.target.closest('.edit-btn');
+            const deleteBtn = e.target.closest('.delete-btn');
+
+            if (editBtn) {
+                const id = editBtn.dataset.id;
+                const toolToEdit = toolsCache.find(tool => tool.id === id);
+                if (toolToEdit) {
+                    dom.editId.value = toolToEdit.id;
+                    dom.toolTitle.value = toolToEdit.title;
+                    dom.toolUrl.value = toolToEdit.url;
+                    dom.toolIcon.value = toolToEdit.iconUrl || '';
+                    dom.toolDescription.value = toolToEdit.description;
+                    dom.toolPinned.checked = toolToEdit.isPinned || false;
+                    dom.formTitle.textContent = 'Edit Tool';
+                    dom.submitToolBtn.textContent = 'Update Tool';
+                    showFormView();
+                }
+            }
+
+            if (deleteBtn) {
+                const id = deleteBtn.dataset.id;
+                if (confirm('Anda yakin ingin menghapus tool ini?')) {
+                    try { await deleteDoc(doc(db, 'shared_tools', id)); } catch (error) { console.error("Error deleting tool:", error); }
+                }
+            }
+        });
+        
+        dom.gridViewBtn.addEventListener('click', () => {
+            currentView = 'grid';
+            dom.gridViewBtn.classList.add('view-btn-active', 'text-white');
+            dom.listViewBtn.classList.remove('view-btn-active', 'text-white');
+            renderContent();
+        });
+
+        dom.listViewBtn.addEventListener('click', () => {
+            currentView = 'list';
+            dom.listViewBtn.classList.add('view-btn-active', 'text-white');
+            dom.gridViewBtn.classList.remove('view-btn-active', 'text-white');
+            renderContent();
+        });
+
+        dom.editAnnouncementBtn.addEventListener('click', async () => {
+            const announcementRef = doc(db, 'site_info', 'announcement');
+            const docSnap = await getDoc(announcementRef);
+            dom.announcementInput.value = docSnap.exists() ? docSnap.data().text : '';
+            dom.announcementModal.classList.remove('hidden');
+        });
+        
+        dom.cancelAnnouncement.addEventListener('click', () => dom.announcementModal.classList.add('hidden'));
+        
+        dom.announcementForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const announcementRef = doc(db, 'site_info', 'announcement');
+            try {
+                await setDoc(announcementRef, { text: dom.announcementInput.value });
+                dom.announcementModal.classList.add('hidden');
+            } catch (error) {
+                console.error("Error saving announcement:", error);
+            }
+        });
+    </script>
 </body>
 </html>
