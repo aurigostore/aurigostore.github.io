@@ -48,7 +48,7 @@
     <div class="absolute bottom-0 -right-4 w-72 h-72 bg-indigo-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse animation-delay-4000"></div>
 
     <!-- Loading Spinner -->
-    <div id="loading-spinner" class="fixed inset-0 flex items-center justify-center z-50"><div class="loader"></div></div>
+    <div id="loading-spinner" class="fixed inset-0 flex items-center justify-center z-50 bg-slate-900"><div class="loader"></div></div>
 
     <!-- Main Container -->
     <div id="main-container" class="hidden relative container mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen flex flex-col z-10">
@@ -83,7 +83,26 @@
         </footer>
     </div>
 
-    <button id="admin-button" class="fixed top-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg shadow-blue-500/50 transition-transform transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-blue-500 z-20"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg></button>
+    <button id="admin-button" class="hidden fixed top-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg shadow-blue-500/50 transition-transform transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-blue-500 z-20"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg></button>
+
+    <!-- Entry Password Modal -->
+    <div id="entry-password-modal" class="hidden fixed inset-0 bg-slate-900/95 flex items-center justify-center z-[100]">
+        <div class="glass-effect rounded-lg shadow-xl p-8 w-full max-w-sm mx-4">
+            <div class="text-center mb-6">
+                 <img src="https://i.imgur.com/Oq470WY.png" alt="Logo Aurigo Store" class="mx-auto h-20 w-20 mb-4">
+                 <h2 class="text-2xl font-bold text-white">Verifikasi Akses</h2>
+                 <p class="text-slate-400 mt-1">Silakan masukkan password untuk melanjutkan.</p>
+            </div>
+            <form id="entry-password-form">
+                <label for="entry-password-input" class="sr-only">Password</label>
+                <input type="password" id="entry-password-input" class="w-full bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white text-center focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Password" required>
+                <p id="entry-password-error" class="text-red-400 text-sm mt-2 text-center hidden">Password salah.</p>
+                <div class="mt-6">
+                    <button type="submit" class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-semibold transition-colors">Masuk</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <div id="password-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"><div class="glass-effect rounded-lg shadow-xl p-8 w-full max-w-sm mx-4"><h2 class="text-2xl font-bold mb-4 text-white">Akses Admin</h2><form id="password-form"><label for="password-input" class="block text-slate-300 mb-2">Masukkan Password</label><input type="password" id="password-input" class="w-full bg-white/5 border border-white/20 rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required><p id="password-error" class="text-red-400 text-sm mt-2 hidden">Password salah.</p><div class="mt-6 flex justify-end space-x-4"><button type="button" id="cancel-password" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-md text-white transition-colors">Batal</button><button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-semibold transition-colors">Masuk</button></div></form></div></div>
 
@@ -103,6 +122,7 @@
         const db = getFirestore(app);
 
         const ADMIN_PASSWORD = 'admin123';
+        const ENTRY_PASSWORD = 'asproject';
         let toolsCache = [];
         let currentView = 'grid';
         let unsubscribeFromTools, unsubscribeFromAnnouncement;
@@ -142,20 +162,48 @@
             announcementForm: document.getElementById('announcement-form'),
             announcementInput: document.getElementById('announcement-input'),
             cancelAnnouncement: document.getElementById('cancel-announcement'),
+            entryPasswordModal: document.getElementById('entry-password-modal'),
+            entryPasswordForm: document.getElementById('entry-password-form'),
+            entryPasswordInput: document.getElementById('entry-password-input'),
+            entryPasswordError: document.getElementById('entry-password-error'),
         };
 
         const defaultIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-slate-500"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>`;
 
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                if (unsubscribeFromTools) unsubscribeFromTools();
-                if (unsubscribeFromAnnouncement) unsubscribeFromAnnouncement();
-                unsubscribeFromTools = listenForTools();
-                unsubscribeFromAnnouncement = listenForAnnouncement();
+        function startApp() {
+            onAuthStateChanged(auth, user => {
+                if (user) {
+                    if (unsubscribeFromTools) unsubscribeFromTools();
+                    if (unsubscribeFromAnnouncement) unsubscribeFromAnnouncement();
+                    unsubscribeFromTools = listenForTools();
+                    unsubscribeFromAnnouncement = listenForAnnouncement();
+                } else {
+                    signInAnonymously(auth).catch(console.error);
+                }
+            });
+        }
+
+        if (sessionStorage.getItem('isVerified') === 'true') {
+            startApp();
+        } else {
+            dom.loadingSpinner.style.display = 'none';
+            dom.entryPasswordModal.classList.remove('hidden');
+            dom.entryPasswordModal.style.display = 'flex';
+        }
+
+        dom.entryPasswordForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            dom.entryPasswordError.classList.add('hidden');
+            if (dom.entryPasswordInput.value === ENTRY_PASSWORD) {
+                sessionStorage.setItem('isVerified', 'true');
+                dom.entryPasswordModal.style.display = 'none';
+                dom.loadingSpinner.style.display = 'flex';
+                startApp();
             } else {
-                signInAnonymously(auth).catch(console.error);
+                dom.entryPasswordError.classList.remove('hidden');
             }
         });
+
 
         const listenForTools = () => {
             const q = query(collection(db, 'shared_tools'), orderBy('createdAt', 'desc'));
@@ -166,6 +214,7 @@
                 dom.loadingSpinner.style.display = 'none';
                 dom.mainContainer.classList.remove('hidden');
                 dom.mainContainer.style.display = 'flex';
+                dom.adminButton.classList.remove('hidden');
             }, console.error);
         };
         
@@ -358,3 +407,4 @@
     </script>
 </body>
 </html>
+```eof
